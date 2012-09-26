@@ -5,8 +5,7 @@
     using System.ComponentModel.Composition;
     using System.Threading;
     using qTrace.Publishing.Contracts;
-    using qTrace.Publishing.Generic;
-    using qTrace.Publishing.Generic.Models;
+    using qTrace.Publishing.Contracts.Adapter;
 
     [Export(typeof(IServiceAdapter))]
     public class ServiceAdapter : IServiceAdapter
@@ -43,7 +42,7 @@
                     DisplayOrder = 1,
                     IsFoundationField = true,
                     HasDependentFields = true,
-                    FieldType = FieldType.SingleChoice,
+                    FieldType = FieldType.Dropdown,
                     AcceptedValues = new List<AcceptedValue> {
                         new AcceptedValue {
                             Id = "1",
@@ -78,7 +77,7 @@
                     Name = "priority",
                     DisplayName = "Priority",
                     DisplayOrder = 3,
-                    FieldType = FieldType.SingleChoice,
+                    FieldType = FieldType.Dropdown,
                     ShowInSubmissionScreen = true,
                     AcceptedValues = new List<AcceptedValue> {
                         new AcceptedValue {

@@ -1,0 +1,759 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>qTrace.Publishing.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:qTrace.Publishing.Contracts.Adapter.AcceptedValue">
+            <summary>
+            Represents a field value.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.AcceptedValue.Id">
+            <summary>
+            The underlying ID/name.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.AcceptedValue.Value">
+            <summary>
+            The display value.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.AcceptedValue.Selected">
+            <summary>
+            <c>true</c> is this is the selected value.
+            </summary>
+        </member>
+        <member name="E:qTrace.Publishing.Contracts.Adapter.AcceptedValue.PropertyChanged">
+            <summary>
+            Property change event.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.Adapter.Attachment">
+            <summary>
+            Represents an attachment.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Attachment.Location">
+            <summary>
+            Location of the attachment as it is published. Its value is determined by the rules below.
+            <list type="bullet">
+                <item><description>If user selects to attach qtrace output, this is the full path to the file.</description></item>
+                <item><description>If user selects to embed link only, this is the full path to the file after being converted to UNC path.</description></item>
+                <item><description>If user selects Dropbox storage, this is the URL of the Dropbox file.</description></item>
+            </list>
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Attachment.AttachAsLink">
+            <summary>
+            Indicates whether user chose to embed only link or Dropbox link of this file to <see cref="P:qTrace.Publishing.Contracts.PublishingRecord.Description"/>.
+            Publishers should consult this property to decide whether it attach upload the file at <see cref="P:qTrace.Publishing.Contracts.Adapter.Attachment.Location"/> to the destination 
+            or simply embed the <see cref="P:qTrace.Publishing.Contracts.Adapter.Attachment.Location"/> to <see cref="P:qTrace.Publishing.Contracts.PublishingRecord.Description"/>. 
+            Default value is <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Attachment.Size">
+            <summary>
+            Gets the size of the file.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Attachment.FormattedSize">
+            <summary>
+            Formatted file size, either bytes or MB or GB
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Attachment.Content">
+            <summary>
+            Gets the content of the file.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.Adapter.Field">
+            <summary>
+            Represents a publisher field.
+            </summary>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.Adapter.Field.#ctor">
+            <summary>
+            Creates a publisher field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.Name">
+            <summary>
+            Unique Name being used to identity the field
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.FieldType">
+            <summary>
+            Gets or sets the type of the field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.DisplayName">
+            <summary>
+            Display name of the field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.ParentFieldName">
+            <summary>
+            If this is a dependent field, this identifies the parent field.
+            <c>null</c> if this is an indepedent field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.ParentFieldValue">
+            <summary>
+            Gets or sets the value of the parent field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.IsFoundationField">
+            <summary>
+            Sets this to <c>true</c> if the field has the following properties:
+            <list type="bullet">
+            <item>Foundation fields always appear before non-foundation fields, regardless of their <see cref="P:qTrace.Publishing.Contracts.Adapter.Field.DisplayOrder"/>.</item>
+            <item>It must always be shown in the submission screen and cannot be hidden by users.</item>
+            <item>Its default value cannot be modified by users; instead its value is persisted across multiple submissions.</item>
+            </list>
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.ShowInSubmissionScreen">
+            <summary>
+            If this is <c>true</c>, the field is displayed in Submission screen.
+            Users can change this value by using the Fields Settings screen.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.IsRequired">
+            <summary>
+            If this is <c>true</c>, the field is <b>always</b> displayed in Submission screen.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.IsEditable">
+            <summary>
+            <c>true</c> if users can change <see cref="P:qTrace.Publishing.Contracts.Adapter.Field.Value"/>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.IsDefaultValueEditable">
+            <summary>
+            <c>true</c> if users can change <see cref="P:qTrace.Publishing.Contracts.Adapter.Field.DefaultValue"/>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.Value">
+            <summary>
+            The value of this field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.DefaultValue">
+            <summary>
+            The default value of this field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.HasDependentFields">
+            <summary>
+            <c>true</c> if this field has dependent fields.
+            qTrace will attach a change event to this field so that 
+            when it's value is changed, <see cref="M:qTrace.Publishing.Contracts.Adapter.IServiceAdapter.GetDependentFields(qTrace.Publishing.Contracts.PublisherSettings,System.String,System.String)"/> is
+            called for this field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.DisplayOrder">
+            <summary>
+            The display order of this field. 
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.Adapter.Field.AcceptedValues">
+            <summary>
+            List of accepted values.
+            </summary>
+        </member>
+        <member name="E:qTrace.Publishing.Contracts.Adapter.Field.PropertyChanged">
+            <summary>
+            The property change event.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.Adapter.FieldType">
+            <summary>
+            Represents the type of <see cref="T:qTrace.Publishing.Contracts.Adapter.Field"/>.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.Adapter.IServiceAdapter">
+            <summary>
+            Base interface for service adapter.
+            It is recommended to implement this interface instead of <see cref="T:qTrace.Publishing.Contracts.IPublisher"/>
+            unless the flexibity of the latter is needed.
+            </summary>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.Adapter.IServiceAdapter.GetMetadata">
+            <summary>
+            Retrieves the metadata about this publisher.
+            </summary>
+            <returns>The metadata about this publisher.</returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.Adapter.IServiceAdapter.GetIndependentFields(qTrace.Publishing.Contracts.PublisherSettings)">
+            <summary>
+            Retrieves fields whose values don't depend on values of other fields.
+            These are usually the base/key fields of a tracker.       
+            The returning fields must have the property <c>HasDependentFields</c> set to <c>true</c>.
+            </summary>
+            <returns>The list of indepedent fields.</returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.Adapter.IServiceAdapter.GetDependentFields(qTrace.Publishing.Contracts.PublisherSettings,System.String,System.String)">
+            <summary>
+            Retrieves fields whose values depend on the value of <paramref name="parentFieldName"/>.
+            This method is called to populate dependent fields for a field whose
+            <see cref="P:qTrace.Publishing.Contracts.Adapter.Field.HasDependentFields"/> property is set to <c>true</c>.
+            This method is for performance purpose by lazily loading dependent fields of a field when its value is changed/selected 
+            from submission screen.
+            If a publisher allows getting all fields (maybe custom fields, too) at once, one might want to 
+            load all the fields in the call to the method <c>GetIndependentFields</c> then cache the whole field result. 
+            When submission scrren calls this method, the service adapter should return the dependent fields from the cache
+            </summary>
+            <param name="settings">The settings that contains publisher connection information</param>
+            <param name="parentFieldName">Name of the parent field.</param>
+            <param name="parentFieldValue">The parent field value.</param>
+            <returns>The fields of this publisher.</returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.Adapter.IServiceAdapter.Verify(qTrace.Publishing.Contracts.PublisherSettings)">
+            <summary>
+            Verifies if publisher settings are valid.
+            </summary>
+            <param name="settings">Publisher settings.</param>
+            <returns>
+            The result of the verification process. 
+            If there's any error, return <c>null</c> or throw an exception (whose <see cref="P:System.Exception.Message"/> will be displayed to users).
+            </returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.Adapter.IServiceAdapter.Publish(qTrace.Publishing.Contracts.PublisherSettings,qTrace.Publishing.Contracts.PublishingRecord,System.Collections.Generic.IDictionary{System.String,System.String[]},System.Collections.Generic.List{qTrace.Publishing.Contracts.Adapter.Attachment})">
+            <summary>
+            Publishes the record.
+            </summary>
+            <param name="settings">Publisher settings.</param>
+            <param name="record">The record to be published</param>
+            <param name="fieldsValues">List of fields and their values.
+            Values of multiple-choice fields are stored in string array.
+            Values of non-multiple-choice fields are stored in the first element of the array.</param>
+            <param name="attachments">The attachments.</param>
+            <returns>
+            The result of the publishing process. 
+            Return <c>null</c> if qTrace should not respond to the returned value.
+            Return a <see cref="T:qTrace.Publishing.Contracts.PublishingResult"/> if qTrace should show successful message to users.
+            Throw an exception (whose <see cref="P:System.Exception.Message"/> if qTrace should show the error to users.
+            </returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.Dialogs.DialogIcon">
+            <summary>
+            The type of icon to be shown in a dialog.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.Markers">
+            <summary>
+            Constants representing markers to be replaced 
+            <see cref="P:qTrace.Publishing.Contracts.PublishingRecord.TraceSteps"/>, 
+            <see cref="P:qTrace.Publishing.Contracts.PublishingRecord.Summary"/> and
+            <see cref="P:qTrace.Publishing.Contracts.PublishingRecord.EnvironmentInformation"/>.
+            </summary>
+        </member>
+        <member name="F:qTrace.Publishing.Contracts.Markers.Heading1">
+            <summary>
+            Marker for Heading1: Description, Trace Steps and Environment Information
+            </summary>
+        </member>
+        <member name="F:qTrace.Publishing.Contracts.Markers.Heading2">
+            <summary>
+            Marker for Heading2: Screen, System Info, App Info
+            </summary>
+        </member>
+        <member name="F:qTrace.Publishing.Contracts.Markers.Heading3">
+            <summary>
+            Marker for Heading3: Step
+            </summary>
+        </member>
+        <member name="F:qTrace.Publishing.Contracts.Markers.Note">
+            <summary>
+            Marker for Note
+            </summary>
+        </member>
+        <member name="F:qTrace.Publishing.Contracts.Markers.NewLine">
+            <summary>
+            Marker for New Line character
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.PublisherInfo">
+            <summary>
+            Metadata of a publisher.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.DisplayName">
+            <summary>
+            Unique name, also used for displaying purpose.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.SmallIconUri">
+            <summary>
+            Gets or sets the URI of the small icon displayed in Settings screen.
+            The returned URI is bound directly to <see cref="P:System.Windows.Controls.Image.Source"/>.
+            </summary>
+            <value>The icon URI.</value>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.LargeIconUri">
+            <summary>
+            Gets or sets the URI of the large icon displayed in Submission screen.
+            The returned URI is bound directly to <see cref="P:System.Windows.Controls.Image.Source"/>.
+            </summary>
+            <value>The icon URI.</value>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.HelpUrl">
+            <summary>
+            Gets or sets the help URL associated with this publisher.
+            If <c>null</c>, Help link is not shown.
+            </summary>
+            <value>The help URL.</value>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.DisableDefaultSettingFields">
+            <summary>
+            If <c>true</c>, qTrace will not show URL, User Name and Password fields. 
+            <c>false</c> by default.
+            </summary>
+            <remarks>
+            If this is <c>true</c> and <see cref="P:qTrace.Publishing.Contracts.PublisherInfo.CustomSettingFields"/> is empty,
+            the publisher won't be shown in Settings screen.
+            </remarks>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.DisableVerification">
+            <summary>
+            If <c>true</c>, Test Connection button isn't displayed.
+            <c>false</c> by default.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherInfo.CustomSettingFields">
+            <summary>
+            List of custom setting fields.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.SettingField">
+            <summary>
+            Represents a setting field to be shown in the Settings screen.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingField.Name">
+            <summary>
+            Name of the field, can be retrieved later in the <c>settings</c> parameter of
+            <see cref="M:qTrace.Publishing.Contracts.IPublisher.Verify(qTrace.Publishing.Contracts.PublisherSettings)"/> and <see cref="M:qTrace.Publishing.Contracts.IPublisher.Publish(qTrace.Publishing.Contracts.PublisherSettings,qTrace.Publishing.Contracts.PublishingRecord,qTrace.Publishing.Contracts.AttachmentFunc)"/>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingField.DisplayName">
+            <summary>
+            Name to be displayed in setting screen.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingField.IsRequired">
+            <summary>
+            <c>true</c> if users are required to enter this field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingField.AcceptedValues">
+            <summary>
+            Accepted values for <see cref="F:qTrace.Publishing.Contracts.SettingFieldType.Dropdown"/> field.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingField.FieldType">
+            <summary>
+            Gets or sets the type of the field.
+            </summary>
+            <value>The type of the field.</value>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.SettingAcceptedValue">
+            <summary>
+            Represents one accepted value for <see cref="F:qTrace.Publishing.Contracts.SettingFieldType.Dropdown"/> field.
+            </summary>
+            <seealso cref="P:qTrace.Publishing.Contracts.SettingField.AcceptedValues"/>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingAcceptedValue.Id">
+            <summary>
+            The underlying ID/name.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.SettingAcceptedValue.Value">
+            <summary>
+            The display value.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.SettingFieldType">
+            <summary>
+            The type of the <see cref="T:qTrace.Publishing.Contracts.SettingField"/>.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.IPublishingContext">
+            <summary>
+            The publishing context of the current environment.
+            Methods of this interface can be invoked by any thread.
+            </summary>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.ShowProgressIndicator(System.Windows.Window,System.String)">
+            <summary>
+            Shows progress indicator.
+            </summary>
+            <param name="owner">The owner.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.HideProgressIndicator(System.Windows.Window)">
+            <summary>
+            Hides progress indicator.
+            </summary>
+            <param name="owner">The owner.</param>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.ShowDialog(System.Object)">
+            <summary>
+            Shows the dialog for a specified view model
+            </summary>
+            <param name="viewModel">The view model.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.OpenFile(qTrace.Publishing.Contracts.Dialogs.OpenFileDialogParameter)">
+            <summary>
+            Opens file dialog
+            </summary>
+            <param name="param">The open file parameter.</param>
+            <returns>A list of selected files to open</returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.SaveFile(qTrace.Publishing.Contracts.Dialogs.SaveFileDialogParameter)">
+            <summary>
+            Opens Save file dialog
+            </summary>
+            <param name="param">The param.</param>
+            <returns>The (path to) file names to be saved or null if user cancelled</returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.PromptSaveAsDialog(System.String,System.String,System.String)">
+            <summary>
+            Prompts the save as dialog.
+            </summary>
+            <param name="initialFileName">Initial name of the file.</param>
+            <param name="saveAsDialogTitle">The save as dialog title.</param>
+            <param name="filter">The filter.</param>
+            <returns><see cref="T:qTrace.Publishing.Contracts.Dialogs.SaveAsDialogResult"/> or null if user cancelled</returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.OpenFolder(qTrace.Publishing.Contracts.Dialogs.OpenFolderDialogParameter)">
+            <summary>
+            Opens dialog to select a folder
+            </summary>
+            <param name="param">The param.</param>
+            <returns>Path to the selected folder or null if user cancelled</returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Error(System.String)">
+            <summary>
+            Shows error message dialog
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Confirm(System.String)">
+            <summary>
+            Shows confirmation dialog
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Confirm(System.String,System.Windows.MessageBoxButton)">
+            <summary>
+            Shows confirmation dialog
+            </summary>
+            <param name="message">The message.</param>
+            <param name="buttons">The buttons.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Inform(System.String)">
+            <summary>
+            Shows information dialog
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Inform(System.Object,System.String)">
+            <summary>
+            Shows information dialog with specified dialog owner
+            </summary>
+            <param name="owner"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Warn(System.String)">
+            <summary>
+            Shows warning message
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Show(System.String,System.String,System.Windows.MessageBoxButton,qTrace.Publishing.Contracts.Dialogs.DialogIcon)">
+            <summary>
+            Shows message dialog
+            </summary>
+            <param name="message">
+            The message to be shown to the user.
+            Supports hyperlink with format: {QASymphony|http://www.qasymphony.com}</param>
+            <param name="caption">Dialog caption</param>
+            <param name="button">Dialog buttons</param>
+            <param name="icon">Dialog icon</param>
+            <returns>Dialog result</returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.Show(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxButton,qTrace.Publishing.Contracts.Dialogs.DialogIcon)">
+            <summary>
+            Shows message dialog with a specified owner.
+            </summary>
+            <param name="owner">The dialog owner.</param>
+            <param name="message">The message.</param>
+            <param name="caption">The caption.</param>
+            <param name="button">The button.</param>
+            <param name="icon">The icon.</param>
+            <returns></returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.ExecuteOnUIThread(System.Action)">
+            <summary>
+            Executes an action on UI thread.
+            </summary>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.ExecuteOnBackgroundThread(System.Action)">
+            <summary>
+            Executes an action on background thread.
+            </summary>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.ExecuteOnBackgroundThread(System.Action,System.ComponentModel.RunWorkerCompletedEventHandler,System.ComponentModel.ProgressChangedEventHandler)">
+            <summary>
+            Executes an action on background thread.
+            </summary>
+            <param name="action">The action.</param>
+            <param name="uiCallback">The UI callback.</param>
+            <param name="progressChanged">The progress changed.</param>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.ShowProxyAuthenticationScreen">
+            <summary>
+            Shows the proxy authentication required screen and option to open proxy setting
+            when there is problem with proxy connection
+            </summary>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.UploadToDropbox(System.String,System.String)">
+            <summary>
+            Uploads a file to Dropbox.
+            </summary>
+            <param name="filePath">The path of the local file to upload.</param>
+            <param name="folder">The Dropbox folder to upload to.</param>
+            <returns>The Dropbox URL of the uploaded file.</returns>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublishingContext.DeleteFromDropbox(System.String)">
+            <summary>
+            Deletes file or folder from Dropbox.
+            </summary>
+            <param name="path">The file or folder URL to be deleted.</param>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.IPublishingContext.Owner">
+            <summary>
+            The current active window.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.IPublishingContext.IsOnUIThread">
+            <summary>
+            Determines if the current thread is the UI thread.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.IPublishingContext.IsDropboxConnected">
+            <summary>
+            Determines if user has connected qTrace with Dropbox.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.PublishingException">
+            <summary>
+            Should be used to indicate publishing errors.
+            </summary>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.PublishingException.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.PublishingException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="message">The error message</param>
+            <param name="cause">The inner error</param>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.PublishingRecord">
+            <summary>
+            A publishing record.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingRecord.Title">
+            <summary>
+            The title.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingRecord.Summary">
+            <summary>
+            The summary.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingRecord.Description">
+            <summary>
+            The description.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingRecord.TraceSteps">
+            <summary>
+            The trace steps.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingRecord.EnvironmentInformation">
+            <summary>
+            System information and application information.
+            Empty if user did not select Include Environment Information checkbox.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.IPublisher">
+            <summary>
+            Base interface for custom publisher.
+            </summary>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublisher.GetMetadata">
+            <summary>
+            Retrieves the metadata about this publisher.
+            </summary>
+            <returns>The metadata about this publisher.</returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublisher.Verify(qTrace.Publishing.Contracts.PublisherSettings)">
+            <summary>
+            Verifies if settings information provided by users are valid.
+            </summary>
+            <param name="settings">The publisher settings.</param>
+            <returns>
+            The result of the verification process. 
+            If there's any error, return <c>null</c> or throw an exception (whose <see cref="P:System.Exception.Message"/> will be displayed to users).
+            </returns>
+            <remarks>
+            <list type="bullet">
+                <item><description>This method is not invoked if <see cref="P:qTrace.Publishing.Contracts.PublisherInfo.DisableVerification"/> is <c>true</c>.</description></item>
+                <item><description>This method must be thread-safe and may be invoked from any thread.</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="M:qTrace.Publishing.Contracts.IPublisher.Publish(qTrace.Publishing.Contracts.PublisherSettings,qTrace.Publishing.Contracts.PublishingRecord,qTrace.Publishing.Contracts.AttachmentFunc)">
+            <summary>
+            Publishes the specified record.
+            </summary>
+            <param name="settings">The publisher settings.</param>
+            <param name="record">The record to be published.</param>
+            <param name="createAttachments">The function used to create attachments. 
+            This function is thread-safe and can be invoked from any thread.</param>
+            <returns>
+            The result of the publishing process. 
+            Return <c>null</c> if qTrace should not respond to the returned value.
+            Return a <see cref="T:qTrace.Publishing.Contracts.PublishingResult"/> if qTrace should show successful message to users.
+            Throw an exception (whose <see cref="P:System.Exception.Message"/> if qTrace should show the error to users.
+            </returns>
+            <remarks>This method must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.IPublisher.Context">
+            <summary>
+            Sets the publishing context of the current environment.
+            </summary>
+            <remarks>This property must be thread-safe and may be invoked from any thread.</remarks>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.AttachmentFunc">
+            <summary>
+            The function used to create attachments. This can be invoked from any thread.
+            </summary>
+            <param name="filePath">The path to store the file(s), e.g. if allow users to select where to save the file(s) to.</param>
+            <param name="format">The expected attachment format, e.g. if allow users to select format.</param>
+            <param name="imageQuality">The expected image quality, e.g. if allow users to select image quality.</param>
+            <returns>The list of absolute file path or paths (if multiple image files are created).</returns>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.AttachmentImageQuality">
+            <summary>
+            Enum for attachment image qualities.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.AttachmentFormat">
+            <summary>
+            Enum for attachment formats.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.PublishingResult">
+            <summary>
+            The result of the publishing process.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingResult.RecordId">
+            <summary>
+            The optional record ID. If available, will be shown to users.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingResult.RecordUrl">
+            <summary>
+            The optional record URL. If available, will be shown to users.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublishingResult.Message">
+            <summary>
+            The optional success message. If available, will be shown to users.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.PublisherSettings">
+            <summary>
+            Represents settings for a particular <see cref="T:qTrace.Publishing.Contracts.IPublisher"/>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.ConnectionName">
+            <summary>
+            The connection name.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.Url">
+            <summary>
+            The URL. <c>null</c> if <see cref="P:qTrace.Publishing.Contracts.PublisherInfo.DisableDefaultSettingFields"/>
+            is <c>true</c>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.UserName">
+            <summary>
+            The user name. <c>null</c> if <see cref="P:qTrace.Publishing.Contracts.PublisherInfo.DisableDefaultSettingFields"/>
+            is <c>true</c>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.Password">
+            <summary>
+            The password. <c>null</c> if <see cref="P:qTrace.Publishing.Contracts.PublisherInfo.DisableDefaultSettingFields"/>
+            is <c>true</c>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.TimeoutInMillis">
+            <summary>
+            Timeout in milliseconds. Publishers should comply to this timeout when making networking calls.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.CustomSettingsFieldsValues">
+            <summary>
+            Values for <see cref="P:qTrace.Publishing.Contracts.PublisherInfo.CustomSettingFields"/>.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.PublisherSettings.AdditionalSettingsValues">
+            <summary>
+            Additional settings. Use this to store things that are specific to each
+            <see cref="T:qTrace.Publishing.Contracts.IPublisher"/>.
+            </summary>
+        </member>
+        <member name="T:qTrace.Publishing.Contracts.VerificationResult">
+            <summary>
+            The result of the verification process.
+            </summary>
+        </member>
+        <member name="P:qTrace.Publishing.Contracts.VerificationResult.Message">
+            <summary>
+            The optional success message. If available, will be shown to users.
+            </summary>
+        </member>
+    </members>
+</doc>

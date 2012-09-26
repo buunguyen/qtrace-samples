@@ -48,10 +48,6 @@
       <Project>{f6846058-8840-456c-9248-2aabf242aa6d}</Project>
       <Name>qTrace.Publishing.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Publishers\qTrace.Publishing.Generic\qTrace.Publishing.Generic.csproj">
-      <Project>{1c6ffb7e-e755-4bea-b6f9-c20b85694474}</Project>
-      <Name>qTrace.Publishing.Generic</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="large.png" />
